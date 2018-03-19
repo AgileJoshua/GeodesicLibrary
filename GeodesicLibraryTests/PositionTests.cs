@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Marknotgeorge.GeodesicLibrary;
 using UnitsNet.Units;
 using UnitsNet;
+using Xunit;
 
 
 namespace GeodesicLibraryTests
@@ -12,7 +12,6 @@ namespace GeodesicLibraryTests
     /// <summary>
     /// Summary description for PositionTests
     /// </summary>
-    [TestClass]
     public class PositionTests
     {
         public PositionTests()
@@ -22,52 +21,12 @@ namespace GeodesicLibraryTests
             //
         }
 
-        private double delta = 0.9; 
+        private int precision = 3; 
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
-        [TestMethod]
+        [Fact]
         public void GetDistanceToTest()
         {
-            double expectedValue = 968.9;
+            double expectedValue = 968.8535;
             
             Position fromPosition = new Position(50.066389, -5.714722);
             Position toPosition = new Position(58.643889, -3.07);
@@ -76,11 +35,11 @@ namespace GeodesicLibraryTests
 
             
 
-            Assert.AreEqual(expectedValue, testValue, delta);
+            Assert.Equal(expectedValue, testValue, precision);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void InitialBearingTest()
         {
             double expectedValue = 9.119722;
@@ -90,11 +49,11 @@ namespace GeodesicLibraryTests
 
             double testValue = fromPosition.InitialBearing(toPosition);
 
-            Assert.AreEqual(expectedValue, testValue, delta);
+            Assert.Equal(expectedValue, testValue, precision);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void FinalBearingTest()
         {
             double expectedValue = 11.275278;
@@ -105,11 +64,11 @@ namespace GeodesicLibraryTests
             double testValue = fromPosition.FinalBearing(toPosition);
             
 
-            Assert.AreEqual(expectedValue, testValue, delta);
+            Assert.Equal(expectedValue, testValue, precision);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void MidpointTest()
         {
             double expectedLat = 54.362222;
@@ -120,11 +79,11 @@ namespace GeodesicLibraryTests
 
             Position testValue = fromPosition.MidpointTo(toPosition);
 
-            Assert.AreEqual(expectedLat, testValue.Latitude, delta);
-            Assert.AreEqual(expectedLon, testValue.Longitude, delta);
+            Assert.Equal(expectedLat, testValue.Latitude, precision);
+            Assert.Equal(expectedLon, testValue.Longitude, precision);
         }
 
-        [TestMethod]
+        [Fact]
         public void DestinationTest()
         {
             double expectedLat = 53.188333;
@@ -136,11 +95,11 @@ namespace GeodesicLibraryTests
 
             Position testValue  = fromPosition.Destination(bearing, distance);           
 
-            Assert.AreEqual(expectedLat, testValue.Latitude, delta);
-            Assert.AreEqual(expectedLon, testValue.Longitude, delta);
+            Assert.Equal(expectedLat, testValue.Latitude, precision);
+            Assert.Equal(expectedLon, testValue.Longitude, precision);
         }
 
-        [TestMethod]
+        [Fact]
         public void IntersectionTest()
         {
             double expectedLat = 50.901667;
@@ -153,24 +112,24 @@ namespace GeodesicLibraryTests
 
             Position testValue = firstPosition.Intersection(firstBearing, secondPosition, secondBearing);
 
-            Assert.AreEqual(expectedLat, testValue.Latitude, delta);
-            Assert.AreEqual(expectedLon, testValue.Longitude, delta);
+            Assert.Equal(expectedLat, testValue.Latitude, precision);
+            Assert.Equal(expectedLon, testValue.Longitude, precision);
         }
 
-        [TestMethod]
+        [Fact]
         public void RhumbDistanceTest()
         {
-            double expectedValue = 5196;
+            double expectedValue = 5196.34;
 
             Position fromPosition = new Position(50.363889, -4.156944);
             Position toPosition = new Position(42.351111, -71.040833);
 
             double testValue = fromPosition.RhumbDistanceTo(toPosition);
 
-            Assert.AreEqual(expectedValue, testValue, delta);
+            Assert.Equal(expectedValue, testValue, precision);
         }
 
-        [TestMethod]
+        [Fact]
         public void RhumbBearingTest()
         {
             double expectedValue = 260.127222;
@@ -180,13 +139,13 @@ namespace GeodesicLibraryTests
 
             double testValue = fromPosition.RhumbBearingTo(toPosition);
 
-            Assert.AreEqual(expectedValue, testValue, delta);
+            Assert.Equal(expectedValue, testValue, precision);
         }
 
-        [TestMethod]
+        [Fact]
         public void RhumbDestinationTest()
         {
-            double expectedLat = 50.963333;
+            double expectedLat = 50.96222;
             double expectedLon = 1.8525;
 
             Position fromPosition = new Position(51.125556, 1.338056);
@@ -195,23 +154,23 @@ namespace GeodesicLibraryTests
 
             Position testValue = fromPosition.Destination(bearing, distance);
 
-            Assert.AreEqual(expectedLat, testValue.Latitude, delta);
-            Assert.AreEqual(expectedLon, testValue.Longitude, delta);
+            Assert.Equal(expectedLat, testValue.Latitude, precision);
+            Assert.Equal(expectedLon, testValue.Longitude, precision);
         }
 
-        [TestMethod]
+        [Fact]
         public void RhumbMidpointTest()
         {
             double expectedLat = 46.3575;
-            double expectedLon = -38.8275;
+            double expectedLon = -38.8274;
 
             Position fromPosition = new Position(50.363889, -4.156944);
             Position toPosition = new Position(42.351111, -71.040833);
 
             Position testValue = fromPosition.RhumbMidpointTo(toPosition);
 
-            Assert.AreEqual(expectedLat, testValue.Latitude, delta);
-            Assert.AreEqual(expectedLon, testValue.Longitude, delta);
+            Assert.Equal(expectedLat, testValue.Latitude, precision);
+            Assert.Equal(expectedLon, testValue.Longitude, precision);
         }
 
 
